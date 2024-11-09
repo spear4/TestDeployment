@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Product Management | Sign Up </title>
+    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <form action="#">
+        <div class="title">Sign Up</div>
+        <div class="input-box underline">
+          <input type="text" placeholder="Enter Your Email" id="userName" required>
+          <div class="underline"></div>
+          <p style="color:red;font-size:12px" id="emailNotValid">! Please provide valid email</p>
+        </div>
+        <div class="input-box" style="margin-top:20px; position:relative">
+          	<input type="password" placeholder="Enter Your Password" id="passWord" class="showPass" required>
+          	<i class="far fa-eye" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+          <div class="underline"></div>
+          <div class="password-requirements">
+  			<p class="passLen">* Password must contain at least 8 Characters</p>
+  			<p class="oneUpper">* At least One Upper Case</p>
+  			<p class="oneLower">* At least One Lower Case</p>
+  			<p class="oneDigit">* At least One Number</p>
+  			<p class="oneSymbol">* At least One Symbol</p>
+			</div>
+        </div>
+        <div class="input-box" style="margin-top:100px;">
+          <input type="password" placeholder="Re-Enter Your Password" id="rePassWord" class="showPass" required>
+          <i class="far fa-eye" id="reTogglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+          <div class="underline"></div>
+          <div style="margin-top:40px;position:absolute;"><p style="color:red;font-size:11px;" id="passNotMatching" hidden>! Password Not Matching</p></div>          
+        </div>
+        <div class="input-box button">
+          <input type="submit" name="" id="signUp" value="Continue">
+        </div>
+      </form>
+        <div class="option">Existing User !<a href="login.html"> Login Here </a></div>
+    </div>
+    
+   	<!-- scriPt to form validation -->
+    <script>
+    
+    	$(document).ready( ()=>{
+    		
+    		//Email valid check, making it hidden
+    		$("#emailNotValid").hide();
+    		
+    		// Initially set password criteria text color to red
+    		$(".passLen, .oneUpper, .oneLower, .oneDigit, .oneSymbol").css("color", "red");
+    		
+    		/* Validate User Email */
+        	// <!---Start--->
+    		$('#userName').on('keyup', ()=>{
+    			
+    			var userName = $('#userName').val();
+    			var emailRegex = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    			
+    	        if (!emailRegex.test(userName) || userName == ""){
+    	        	
+        	        $("#emailNotValid").show();
+        	        event.preventDefault();
+        	        
+    	        }else{
+    	        	
+    	        	$("#emailNotValid").hide();
+    	        	/* alert("Valid Email"); */	        	
+    	        }
+    			
+    		});
+        	// <!---End--->
+        	
+    		
+    		/* Validate Password */
+        	// <!---Start--->
+        	$('#passWord').on('keyup', ()=>{
+        		
+        	    var password = $('#passWord').val();
+        	    console.log(password);
+
+        	    // Check password length
+        	    if (password.length >= 8) {
+        	      	$(".passLen").css("color", "green");
+        	    } else {
+        	      	$(".passLen").css("color", "red");
+					event.preventDefault();
+        	    }
+
+        	    // Check for at least one uppercase letter
+        	    if (/[A-Z]/.test(password)) {
+        	      	$(".oneUpper").css("color", "green");
+        	    } else {
+        	      	$(".oneUpper").css("color", "red");
+        	      	event.preventDefault();
+        	    }
+
+        	    // Check for at least one lowercase letter
+        	    if (/[a-z]/.test(password)) {
+        	      	$(".oneLower").css("color", "green");
+        	    } else {
+        	      	$(".oneLower").css("color", "red");
+					event.preventDefault();
+        	    }
+
+        	    // Check for at least one digit
+        	    if (/[0-9]/.test(password)) {
+        	      $(".oneDigit").css("color", "green");
+        	    } else {
+        	      	$(".oneDigit").css("color", "red");
+					event.preventDefault();
+        	    }
+
+        	    // Check for at least one special symbol
+        	    if (/[\W_]/.test(password)) { // \W matches non-word characters, _ for underscore
+        	      $(".oneSymbol").css("color", "green");
+        	    } else {
+        	      	$(".oneSymbol").css("color", "red");
+					event.preventDefault();
+        	    }
+        	    
+        	  });	        	
+        	// <!---End--->    
+    		
+			
+    		
+    		//password view and hide
+    		// <!---Start--->
+    	    // Toggle password visibility for Enter Password field
+  			$("#togglePassword").on("click", function () {
+    			const passField = $("#passWord");
+    			const type = passField.attr("type") === "password" ? "text" : "password";
+    			passField.attr("type", type);
+    			$(this).toggleClass("fa-eye fa-eye-slash"); // Toggle icon
+  				});
+
+  			// Toggle password visibility for Re-Enter Password field
+  			$("#reTogglePassword").on("click", function () {
+    			const rePassField = $("#rePassWord");
+    			const type = rePassField.attr("type") === "password" ? "text" : "password";
+    			rePassField.attr("type", type);
+    			$(this).toggleClass("fa-eye fa-eye-slash"); // Toggle icon
+  			});
+    	 	// <!---End--->
+    	 	
+    	 	//password view and hide
+    		// <!---Start--->
+  		  	$('#rePassWord').on('keyup', ()=>{
+  		  		
+  		  	const password = $('#passWord').val();
+  		    const confirmPassword = $('#rePassWord').val();
+
+  		    if (password != confirmPassword) {
+  		      $('#passNotMatching').show(); // Show the error message
+				event.preventDefault();
+  		    } else {
+  		      $('#passNotMatching').hide(); // Hide the error message if passwords match
+  		    }
+  		  		
+  		  	});
+  		  	
+  		  	
+  		  	
+  		  	//get values from the fields
+  		  	var user = $('#userName').val();
+  		  	var pass = $('#passWord').val();
+  		  	var cPass = $('#rePassWord').val();
+    		
+  		  	$('#signUp').on('click', ()=>{
+  		  		
+				if(user != "" && pass != "" && cPass != ""){
+	  		  		
+	  		  		alert("all fileds are full");
+  		  		
+  		  		}
+  		  	});
+  		  	
+    	 	
+    	});
+    
+    </script>
+    
+    
+  </body>
+</html>
